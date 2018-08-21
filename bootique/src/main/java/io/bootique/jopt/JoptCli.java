@@ -24,6 +24,7 @@ import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -53,7 +54,7 @@ public class JoptCli implements Cli {
 
 	@Override
 	public List<String> optionStrings(String name) {
-		return optionSet.valuesOf(name).stream().map(o -> String.valueOf(o)).collect(toList());
+		return optionSet.valuesOf(name).stream().map(String::valueOf).collect(toList());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -62,8 +63,23 @@ public class JoptCli implements Cli {
 		return (List<String>) optionSet.nonOptionArguments();
 	}
 
+	@Deprecated
     @Override
     public List<OptionSpec<?>> detectedOptions() {
-        return optionSet != null ? optionSet.specs() : new ArrayList<>();
+        return optionSet != null ? optionSet.specs() : Collections.emptyList();
     }
+
+	@Override
+	public List<String> detectedOptionsNames() {
+		if(optionSet == null) {
+			return Collections.emptyList();
+		}
+
+		List<String> options = new ArrayList<>();
+		for(OptionSpec<?> spec : optionSet.specs()) {
+			options.addAll(spec.options());
+		}
+
+		return options;
+	}
 }

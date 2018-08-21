@@ -123,12 +123,12 @@ public class JsonNodeConfigurationFactoryProvider implements Provider<Configurat
             return overrider;
         }
 
-        List<OptionSpec<?>> detectedOptions = cli.detectedOptions();
-        if (detectedOptions.isEmpty()) {
+        List<String> detectedOptionsNames = cli.detectedOptionsNames();
+        if (detectedOptionsNames.isEmpty()) {
             return overrider;
         }
 
-        for (OptionSpec<?> cliOpt : detectedOptions) {
+        for (String cliOpt : detectedOptionsNames) {
 
             OptionMetadata omd = findMetadata(cliOpt);
 
@@ -160,15 +160,13 @@ public class JsonNodeConfigurationFactoryProvider implements Provider<Configurat
         return overrider;
     }
 
-    private OptionMetadata findMetadata(OptionSpec<?> option) {
-
-        List<String> optionNames = option.options();
+    private OptionMetadata findMetadata(String option) {
 
         // TODO: allow lookup of option metadata by name to avoid linear scans...
         // Though we are dealing with small collection, so shouldn't be too horrible.
 
         for (OptionMetadata omd : optionMetadata) {
-            if (optionNames.contains(omd.getName())) {
+            if (option.equals(omd.getName())) {
                 return omd;
             }
         }

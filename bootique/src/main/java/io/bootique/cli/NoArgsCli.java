@@ -47,8 +47,14 @@ public final class NoArgsCli implements Cli {
         return false;
     }
 
+    @Deprecated
     @Override
     public List<OptionSpec<?>> detectedOptions() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<String> detectedOptionsNames() {
         return Collections.emptyList();
     }
 

@@ -40,7 +40,17 @@ public interface Cli {
 
     boolean hasOption(String name);
 
+    /**
+     * @deprecated since 0.26, use {@link #detectedOptionsNames()} instead
+     */
+    @Deprecated
     List<OptionSpec<?>> detectedOptions();
+
+    /**
+     * @return list of options' names that this Cli recognizes
+     * @since 0.26
+     */
+    List<String> detectedOptionsNames();
 
     /**
      * Returns a List of String values for the specified option name.
