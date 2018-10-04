@@ -30,6 +30,7 @@ import io.bootique.config.ConfigurationFactory;
 import io.bootique.log.BootLogger;
 import io.bootique.meta.application.CommandMetadata;
 import io.bootique.test.TestIO;
+import io.bootique.yaml.annotation.YamlMapping;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -85,6 +86,7 @@ public class BQTestFactoryIT {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @YamlMapping(ignoreUnknownFields = true)
     static class Bean1 {
         private String a;
         private Bean2 c;

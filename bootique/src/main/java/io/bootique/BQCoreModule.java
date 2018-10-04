@@ -46,6 +46,7 @@ import io.bootique.config.ConfigurationFactory;
 import io.bootique.config.ConfigurationSource;
 import io.bootique.config.PolymorphicConfiguration;
 import io.bootique.config.TypesFactory;
+import io.bootique.config.yaml.YamlConfigurationFactoryProvider;
 import io.bootique.env.DeclaredVariable;
 import io.bootique.env.DefaultEnvironment;
 import io.bootique.env.Environment;
@@ -147,9 +148,9 @@ public class BQCoreModule implements Module {
         binder.bind(ShutdownManager.class).toInstance(Objects.requireNonNull(shutdownManager));
         binder.bind(String[].class).annotatedWith(Args.class).toInstance(Objects.requireNonNull(args));
 
-        // too much code to create config factory.. extracting it in a provider
-        // class...
-        binder.bind(ConfigurationFactory.class).toProvider(JsonNodeConfigurationFactoryProvider.class).in(Singleton.class);
+        // too much code to create config factory.. extracting it in a provider class...
+//        binder.bind(ConfigurationFactory.class).toProvider(JsonNodeConfigurationFactoryProvider.class).in(Singleton.class);
+        binder.bind(ConfigurationFactory.class).toProvider(YamlConfigurationFactoryProvider.class).in(Singleton.class);
     }
 
     OptionMetadata createConfigOption() {
